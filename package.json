@@ -1,0 +1,22 @@
+{
+  "name": "monday-api",
+  "version": "1.0.0",
+  "description": "This API presents an authenticated interface to Monday.com  ",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "monday-api": "file:",
+    "oas3-tools": "^2.2.3",
+    "request": "^2.88.2"
+  }
+}

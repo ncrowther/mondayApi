@@ -1,0 +1,152 @@
+openapi: 3.0.1
+info:
+  title: Monday API
+  description: 'This API presents an authenticated interface to Monday.com  '
+  contact:
+    email: ncrowther@uk.ibm.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: https://monday.1apbmbk49s5e.eu-gb.codeengine.appdomain.cloud/
+- url: https://lz4fm5hn-8080.uks1.devtunnels.ms/
+security:
+- bearerAuth: []
+tags:
+- name: Facade for Monday
+  description: Facade for Monday API
+  externalDocs:
+    description: Find out more
+    url: https://developer.monday.com/api-reference/docs/introduction-to-graphql
+paths:
+  /board:
+    get:
+      tags:
+      - board
+      summary: Get board from Monday.com
+      description: Get board from Monday.com
+      operationId: boardGET
+      parameters:
+      - name: board
+        in: query
+        description: Monday board name
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutputSet'
+      x-swagger-router-controller: Board
+  /row:
+    post:
+      tags:
+      - row
+      summary: Write a row to a Monday Board
+      description: Write a row to Monday Board
+      operationId: rowPOST
+      parameters:
+      - name: board
+        in: query
+        description: Monday board name
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocModel'
+        required: true
+      responses:
+        "200":
+          description: OK
+      x-swagger-router-controller: Row
+components:
+  schemas:
+    OutputSet:
+      type: object
+      properties:
+        Docs:
+          $ref: '#/components/schemas/tDocTable'
+      example:
+        Docs:
+        - image: ben.png
+          question: What was Ben Johnson's time in the 100M sprint championship that
+            he won in 1986
+          answer: A) 9.95 seconds
+          choice5: E) 13.3 seconds
+          choice3: C) 11.3 seconds
+          category: SPORT
+          choice4: D) 12.3 seconds
+          choice1: A) 9.95 seconds
+          choice2: B) 10.3 seconds
+        - image: ben.png
+          question: What was Ben Johnson's time in the 100M sprint championship that
+            he won in 1986
+          answer: A) 9.95 seconds
+          choice5: E) 13.3 seconds
+          choice3: C) 11.3 seconds
+          category: SPORT
+          choice4: D) 12.3 seconds
+          choice1: A) 9.95 seconds
+          choice2: B) 10.3 seconds
+    tDocTable:
+      type: array
+      items:
+        $ref: '#/components/schemas/DocModel'
+    DocModel:
+      type: object
+      properties:
+        question:
+          type: string
+          example: What was Ben Johnson's time in the 100M sprint championship that
+            he won in 1986
+        choice1:
+          type: string
+          example: A) 9.95 seconds
+        choice2:
+          type: string
+          example: B) 10.3 seconds
+        choice3:
+          type: string
+          example: C) 11.3 seconds
+        choice4:
+          type: string
+          example: D) 12.3 seconds
+        choice5:
+          type: string
+          example: E) 13.3 seconds
+        answer:
+          type: string
+          example: A) 9.95 seconds
+        image:
+          type: string
+          example: ben.png
+        category:
+          type: string
+          example: SPORT
+      example:
+        image: ben.png
+        question: What was Ben Johnson's time in the 100M sprint championship that
+          he won in 1986
+        answer: A) 9.95 seconds
+        choice5: E) 13.3 seconds
+        choice3: C) 11.3 seconds
+        category: SPORT
+        choice4: D) 12.3 seconds
+        choice1: A) 9.95 seconds
+        choice2: B) 10.3 seconds
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
